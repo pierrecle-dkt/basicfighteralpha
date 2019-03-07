@@ -17,7 +17,6 @@ for(let i = 1; i <= 2; i++) {
 /**************************************************\
  Etat initial
 \**************************************************/
-let joueurCourant = 1;
 let action = null;
 const joueurs = {
     joueur1: {
@@ -29,20 +28,31 @@ const joueurs = {
         force: 10
     }
 };
+let numeroJoueurCourant = 1;
+let joueurCourant = joueurs.joueur1;
+let adversaireCourant = joueurs.joueur2;
 
 /**************************************************\
  Boucle principale : ton terrain de jeu
 \**************************************************/
 async function tourDeJeu() {
     window[action]();
+
     await animateAction();
     action = null;
 
     if(!peuJouer()) {
         finDeJeu();
     }
+    else {
+        changeJoueur();
+    }
 
     draw();
+}
+
+function peuJouer() {
+    return true;
 }
 
 function attaque() {
@@ -51,14 +61,15 @@ function attaque() {
 function defense() {
 }
 
-function peuJouer() {
-    return true;
+function changeJoueur() {
+    adversaireCourant = joueurCourant;
+    numeroJoueurCourant = (numeroJoueurCourant%2)+1;
+    joueurCourant = joueurs[`joueur${numeroJoueurCourant}`];
 }
 
 function finDeJeu() {
     disableButtons();
 }
-
 /**************************************************\
  Outils
 \**************************************************/
@@ -69,14 +80,14 @@ async function draw() {
         playerElts.life.style.width = `${joueurs[`joueur${i}`].vie}%`;
         playerElts.strength.style.width = `${joueurs[`joueur${i}`].force}%`;
     }
-    domElts[`player${joueurCourant}`].indicator.classList.add('visible');
+    domElts[`player${numeroJoueurCourant}`].indicator.classList.add('visible');
 }
 
 async function animateAction() {
     if(action === "attaque") {
-        domElts[`player${(joueurCourant%2 + 1)}`].root.classList.add("attack");
+        domElts[`player${(numeroJoueurCourant%2 + 1)}`].root.classList.add("attack");
     } else {
-        domElts[`player${joueurCourant}`].root.classList.add("defend");
+        domElts[`player${numeroJoueurCourant}`].root.classList.add("defend");
     }
 
     return new Promise((resolve) => {

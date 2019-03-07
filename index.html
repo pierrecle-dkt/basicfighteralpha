@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>Basic fighter Alpha</title>
+        <link href="style.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1>Basic fighter Alpha</h1>
+        <div class="fighters">
+            <div data-player="1">
+                <div class="anim"><img src="./ruy.gif" /></div>
+                <div class="stats">
+                    <div>
+                        <span>Vie:</span>
+                        <span class="bar-container" data-life><span class="bar"></span></span>
+                    </div>
+                    <div>
+                        <span>Force:</span>
+                        <span class="bar-container" data-strength><span class="bar"></span></span>
+                    </div>
+                </div>
+                <span class="playerName">Pierre</span>
+                <div class="current"></div>
+            </div>
+            <div data-player="2">
+                    <div class="anim"><img src="./guile.gif" /></div>
+                <div class="stats">
+                    <div>
+                        <span>Vie:</span>
+                        <span class="bar-container" data-life><span class="bar"></span></span>
+                    </div>
+                    <div>
+                        <span>Force:</span>
+                        <span class="bar-container" data-strength><span class="bar"></span></span>
+                    </div>
+                </div>
+                <span class="playerName">Hugo</span>
+                <div class="current"></div>
+            </div>
+        </div>
+        <div class="actions">
+            <button data-action="attaque">Attaque</button>
+            <button data-action="defense">Défense</button>
+        </div>
+        <script src="./game.js"></script>
+    </body>
+</html>

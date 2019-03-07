@@ -1,11 +1,12 @@
 html {
     background: #1c3f70;
     color: #fff;
+    font-family: sans-serif;
+    font-weight: 100;
 }
 
 h1 {
     text-align: center;
-    font-family: sans-serif;
     font-weight: 300;
 }
 
@@ -90,6 +91,11 @@ button {
     padding: 10px;
     border: 1px sold #aaa;
     background: #fafafa;
+}
+
+.rules {
+    width: 70%;
+    margin: 0 auto;
 }
 
 /* Animations */

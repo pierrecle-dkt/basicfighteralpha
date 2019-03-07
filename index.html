@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta charset="utf-8" />
         <title>Basic fighter Alpha</title>
         <link href="style.css" rel="stylesheet">
     </head>
@@ -18,7 +19,7 @@
                         <span class="bar-container" data-strength><span class="bar"></span></span>
                     </div>
                 </div>
-                <span class="playerName">Pierre</span>
+                <span class="playerName">Hooman</span>
                 <div class="current"></div>
             </div>
             <div data-player="2">
@@ -33,13 +34,28 @@
                         <span class="bar-container" data-strength><span class="bar"></span></span>
                     </div>
                 </div>
-                <span class="playerName">Hugo</span>
+                <span class="playerName">Compoota</span>
                 <div class="current"></div>
             </div>
         </div>
         <div class="actions">
             <button data-action="attaque">Attaque</button>
             <button data-action="defense">Défense</button>
+        </div>
+        <div class="rules">
+            <h2>Règles</h2>
+            <span>L'intelligence artifielle est ici stupide : les choix sont aléatoires.</span>
+            <h3>Attaque</h3>
+            <ul>
+                <li>-100% de la force du joueur en vie pour l'adversaire</li>
+                <li>+25% de la force du joueur</li>
+            </ul>
+            <h3>Défense</h3>
+            <ul>
+                <li>+25% de la force de l'adversaire en vie</li>
+                <li>-20% de la force du joueur en force</li>
+                <li>+10% de force du joueur</li>
+            </ul>
         </div>
         <script src="./game.js"></script>
     </body>

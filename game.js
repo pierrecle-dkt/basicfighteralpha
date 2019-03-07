@@ -17,7 +17,6 @@ for(let i = 1; i <= 2; i++) {
 /**************************************************\
  Etat initial
 \**************************************************/
-let joueurCourant = 1;
 let action = null;
 const joueurs = {
     joueur1: {
@@ -29,34 +28,68 @@ const joueurs = {
         force: 10
     }
 };
+let numeroJoueurCourant = 1;
+let joueurCourant = joueurs.joueur1;
+let adversaireCourant = joueurs.joueur2;
 
 /**************************************************\
  Boucle principale : ton terrain de jeu
 \**************************************************/
 async function tourDeJeu() {
     window[action]();
+    verifieStats();
+
     await animateAction();
     action = null;
 
     if(!peuJouer()) {
         finDeJeu();
     }
+    else {
+        changeJoueur();
+    }
 
     draw();
-}
-
-function attaque() {
-}
-
-function defense() {
+    if(numeroJoueurCourant === 2) {
+        intelligenceArtifielle();
+    }
 }
 
 function peuJouer() {
-    return true;
+    return joueurCourant.vie > 0 && adversaireCourant.vie > 0;
+}
+
+function attaque() {
+    adversaireCourant.vie -= joueurCourant.force;
+    joueurCourant.force *= 1.25;
+}
+
+function defense() {
+    joueurCourant.vie += adversaireCourant.force * 0.25;
+    adversaireCourant.force -= joueurCourant.force * 0.2;
+    joueurCourant.force *= 1.1;
+}
+
+function verifieStats() {
+    joueurCourant.vie = Math.min(Math.max(joueurCourant.vie, 0), 100);
+    joueurCourant.force = Math.min(Math.max(joueurCourant.force, 1), 100);
+    adversaireCourant.vie = Math.min(Math.max(adversaireCourant.vie, 0), 100);
+    adversaireCourant.force = Math.min(Math.max(adversaireCourant.force, 1), 100);
+}
+
+function changeJoueur() {
+    adversaireCourant = joueurCourant;
+    numeroJoueurCourant = (numeroJoueurCourant%2)+1;
+    joueurCourant = joueurs[`joueur${numeroJoueurCourant}`];
 }
 
 function finDeJeu() {
     disableButtons();
+}
+
+function intelligenceArtifielle() {
+    action = Math.random() > 0.5 ? "attaque" : "defense";
+    tourDeJeu();
 }
 
 /**************************************************\
@@ -69,14 +102,14 @@ async function draw() {
         playerElts.life.style.width = `${joueurs[`joueur${i}`].vie}%`;
         playerElts.strength.style.width = `${joueurs[`joueur${i}`].force}%`;
     }
-    domElts[`player${joueurCourant}`].indicator.classList.add('visible');
+    domElts[`player${numeroJoueurCourant}`].indicator.classList.add('visible');
 }
 
 async function animateAction() {
     if(action === "attaque") {
-        domElts[`player${(joueurCourant%2 + 1)}`].root.classList.add("attack");
+        domElts[`player${(numeroJoueurCourant%2 + 1)}`].root.classList.add("attack");
     } else {
-        domElts[`player${joueurCourant}`].root.classList.add("defend");
+        domElts[`player${numeroJoueurCourant}`].root.classList.add("defend");
     }
 
     return new Promise((resolve) => {
